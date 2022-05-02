@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Disc{% endblock %}
+
+{% block body %}
+    <h1>Edit Disc</h1>
+
+    {{ include('disc/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_disc_index') }}">back to list</a>
+
+    {{ include('disc/_delete_form.html.twig') }}
+{% endblock %}
