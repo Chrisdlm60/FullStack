@@ -1,8 +1,11 @@
 <?php 
+
     // Entity/Products.php
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+
+    use Symfony\Component\Validator\Constraints as Assert;
 
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
@@ -20,17 +23,19 @@
              * @ORM\Id
              * @ORM\GeneratedValue(strategy="IDENTITY")
              */
-            private $Productid;
+            private $Productid; // Auto-incrementation
 
             /**
              * @ORM\Column(name="ProductName", type="string", length=40)
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner la quantite du produit"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w\#\_\-éèàçâêîôûùäaëïüöa-z-A-Z]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $Productname;
-
-            /**
-             * @ORM\Column(name="SupplierID", type="integer", nullable=true)
-             */
-            private $SupplierId;
 
             /**
              * @ORM\Column(name="CategoryID", type="integer", nullable=true)
@@ -39,26 +44,61 @@
 
             /**
              * @ORM\Column(name="QuantityPerUnit", type="string")
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner la quantite du produit"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w\#\_\-éèàçâêîôûùäaëïüöa-z-A-Z0-9]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $Quantity;
 
             /**
-             * @ORM\Column(name="UnitPrice", type="integer", nullable=true)
+             * @ORM\Column(name="UnitPrice", type="float", nullable=true)
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner le prix à l'unité"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w\#\_\-\.0-9]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $UnitePrice;
 
             /**
              * @ORM\Column(name="UnitsInStock", type="integer", nullable=true)
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner la quantite du produit en stock"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w0-9]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $UnitsInStock;
 
             /**
              * @ORM\Column(name="UnitsOnOrder", type="integer", nullable=true)
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner le nombre de produits en commande"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w\#\_\-\.0-9]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $UnitsOnOrder;
 
             /**
              * @ORM\Column(name="ReorderLevel", type="integer", nullable=true)
+             * @Assert\NotBlank(
+             *     message="Veuillez renseigner le niveau d'alerte"
+             * )
+             * @Assert\Regex(
+             *     pattern="/^[\s\w\#\_\-\.0-9]+$/",
+             *     message="Caratère(s) non valide(s)"
+             * )
              */
             private $ReorderLevel;
 
@@ -95,20 +135,23 @@
             /**
             * @ORM\OneToMany(targetEntity="OrderDetails", mappedBy="products", orphanRemoval=true)
             */
-            private $products;
+            private $orderdetails;
 
             public function __construct()
             {
-                $this->products = new ArrayCollection();
+                $this->orderdetails = new ArrayCollection();
             }
 
+            /**
+             * @return Collection|OrderDetails[]
+             */
             public function getProducts(): Collection{
-                return $this->products;
+                return $this->orderdetails;
             }
 
             public function addProducts(OrderDetails $product): self {
-                if (!$this->products->contains($product)){
-                    $this->products[] = $product;
+                if (!$this->orderdetails->contains($product)){
+                    $this->orderdetails[] = $product;
                     $product->setProducts($this);
                 }
                 return $this;
@@ -129,41 +172,86 @@
                     return $this;
                 }
 
-            public function getSupplierId() : ?int {
-                return $this->SupplierId;
-            }
+            /**** Gettor Products ****/
+                // public function getSuppliersId() : ?int {
+                //     return $this->SupplierId;
+                // }
 
-            public function getProductId(): ?int
-            {
-                return $this->Productid;
-            }
+                public function getProductId(): ?int {
+                    return $this->Productid;
+                }
 
-            public function getCategoryId() : ?int {
-                return $this->IdCategory;
-            }
+                public function getIdCategory() : ?int {
+                    return $this->IdCategory;
+                }
 
-            public function getQuantity() : ?string{
-                return $this->Quantity;
-            }
-            public function getUnitPrice() : ?float{
-                return $this->UnitePrice;
-            }
+                public function getQuantity() : ?string {
+                    return $this->Quantity;
+                }
+                public function getUnitePrice() : ?float {
+                    return $this->UnitePrice;
+                }
 
-            public function getUnitsInStock() :? int{
-                return $this->UnitsInStock;
-            }
+                public function getUnitsInStock() :? int {
+                    return $this->UnitsInStock;
+                }
 
-            public function getUnitsOnOrder() :? int {
-                return $this->UnitsOnOrder;
-            }
+                public function getUnitsOnOrder() :? int {
+                    return $this->UnitsOnOrder;
+                }
 
-            public function getReorderLevel() :? int {
-                return $this->ReorderLevel;
-            }
+                public function getReorderLevel() :? int {
+                    return $this->ReorderLevel;
+                }
 
-            public function getDiscontinued() :? int {
-                return $this->Discontinued;
-            }
+                public function getDiscontinued() :? int {
+                    return $this->Discontinued;
+                }
+
+
+            /**** Settor Products Method ****/
+                // public function setSuppliersId($idsupp){
+                //     $this->SupplierId = $idsupp;
+                //     return $this;
+                // }
+                public function setProductId($idprod) {
+                    $this->Productid = $idprod;
+                    return $this;
+                }
+
+                public function setIdCategory($idcat) {
+                    $this->IdCategory = $idcat;
+                    return $this;
+                }
+
+                public function setQuantity($quant) {
+                    $this->Quantity = $quant;
+                    return $this;
+                }
+                public function setUnitePrice($price) {
+                    $this->UnitePrice = $price;
+                    return $this;
+                }
+
+                public function setUnitsInStock($stock) {
+                    $this->UnitsInStock = $stock;
+                    return $this;
+                }
+
+                public function setUnitsOnOrder($order) {
+                    $this->UnitsOnOrder = $order;
+                    return $this;
+                }
+
+                public function setReorderLevel($level) {
+                    $this->ReorderLevel = $level;
+                    return $this;
+                }
+
+                public function setDiscontinued($disc) {
+                    $this->Discontinued = $disc | 0;
+                    return $this;
+                }
 
     }
 ?>

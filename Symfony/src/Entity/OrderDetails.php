@@ -2,7 +2,8 @@
     // Entity/Products.php
     namespace App\Entity;
 
-    use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
     /**
      * @ORM\Entity
@@ -15,7 +16,6 @@
             /**
              * @ORM\Column(name="OrderId", type="integer", nullable=false)
              * @ORM\Id
-             * @ORM\GeneratedValue(strategy="IDENTITY")
              */
             private $orderid;
             
@@ -31,6 +31,7 @@
 
             /**
              * @ORM\Column(name="ProductID", type="integer" , nullable=false)
+             * @ORM\Id
              */
             private $productid;
 
@@ -46,7 +47,9 @@
 
             public function getProducts(): ? Products
             {
+                // dd($this->products);
                 return $this->products;
+                
             }
 
             public function setProducts(?Products $product): self

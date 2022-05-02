@@ -70,20 +70,20 @@
                 /**
                 * @ORM\OneToMany(targetEntity="OrderDetails", mappedBy="orders", orphanRemoval=true)
                 */
-                private $orders;
+                private $orderdetails;
 
                 public function __construct()
                 {
-                    $this->orders = new ArrayCollection();
+                    $this->orderdetails = new ArrayCollection();
                 }
 
                 public function getOrdersId(): Collection{
-                    return $this->orders;
+                    return $this->orderdetails;
                 }
 
                 public function addOrdersId(OrderDetails $order): self {
-                    if (!$this->orders->contains($order)){
-                        $this->orders[] = $order;
+                    if (!$this->orderdetails->contains($order)){
+                        $this->orderdetails[] = $order;
                         $order->setOrdersId($this);
                     }
                     return $this;

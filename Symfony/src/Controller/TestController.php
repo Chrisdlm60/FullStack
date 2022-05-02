@@ -7,13 +7,12 @@
 
     use App\Entity\Products;
     use App\Entity\Orders;
-    use App\Entity\Suppliers;
     use App\Entity\OrderDetails;
 
     class TestController extends AbstractController
     {
         /**
-         * @Route("/test", name="test")
+         * @Route("/orderdetails", name="test")
          */
         public function index()
         {
@@ -21,20 +20,32 @@
             $obj = $repo->findAll();
 
             // $obj[0]->getSuppliers()->getName();
+            // dd($obj);
 
             return $this->render('test/index.html.twig', [
-                'obj' =>  $obj
+                'order' =>  $obj
             ]);
         }
         /**
-         * @Route("/test2", name="test2")
+         * @Route("/order/{Orderid}", name="order")
          */
         public function orders(){
             $repo = $this->getDoctrine()->getRepository(Orders::class);
-            $obj2 = $repo->findAll();
+            $obj[] = $repo->findAll();
 
-            return $this->render('test2/index.html.twig', [
-                'obj2' => $obj2
+            return $this->render('orders/index.html.twig', [
+                'order' => $obj
+            ]);
+        }
+        /**
+         * @Route("/order/{Orderid}", name="order", requirements={"Orderid"="\d+"})
+         */
+        public function order($Orderid){
+            $repo = $this->getDoctrine()->getRepository(Orders::class);
+            $obj['OrderID'] = $repo->find($Orderid);
+
+            return $this->render('orders/index.html.twig', [
+                'order' => $obj
             ]);
         }
 
@@ -46,18 +57,18 @@
             $obj = $repo->findAll();
 
             return $this->render('products/product.html.twig', [
-                'obj' => $obj
+                'products' => $obj
             ]);
         }
         /**
-         * @Route("/product/id/{Productid}", name="product", requirements={"Productid"="\d+"})
+         * @Route("/product/{Productid}", name="product", requirements={"Productid"="\d+"})
          */
         public function product($Productid){
             $repo = $this->getDoctrine()->getRepository(Products::class);
             $obj['ProductID'] = $repo->find($Productid);
-
+                
             return $this->render('products/product.html.twig', [
-                'obj' => $obj
+                'products' => $obj
             ]);
         }
     }
