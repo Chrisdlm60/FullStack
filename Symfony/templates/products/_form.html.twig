@@ -1,0 +1,66 @@
+{{ form_start(form, 
+    {'attr': 
+        {'novalidate': 'novalidate'}
+    }) 
+}}
+
+    <div class="container-fluid">
+            <div class="error">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.Productname) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.suppliers) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.IdCategory) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.Quantity) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.UnitePrice) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.UnitsInStock) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.UnitsOnOrder) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.ReorderLevel) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 offset-md-2">
+                    <a href="{{ path('app_products_index') }}" class="btn btn-secondary btn-lg">back to list</a>
+                </div>
+                <div class="col-md-4 offset-md-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        {{ button_label|default('Save') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="invisible">
+                    {{ form_row(form.Discontinued) }}
+                </div>
+            </div>
+    </div>
+
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+
+{{ form_end(form) }}
+

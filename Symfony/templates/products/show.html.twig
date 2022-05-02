@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+    <h1>Products</h1>
+
+    <div class="container">
+        <div class="table-responsive-sm">
+            <table class="table table-striped table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th>Productid</th>
+                        <td>{{ product.Productid }}</td>
+                    </tr>
+                    <tr>
+                        <th>Productname</th>
+                        <td>{{ product.Productname }}</td>
+                    </tr>
+                    <tr>
+                        <th>SupplierName</th>
+                        <td>{{ product.Suppliers?product.Suppliers.CompanyName:'null' }}</td>
+                    </tr>
+                    <tr>
+                        <th>IdCategory</th>
+                        <td>{{ product.IdCategory }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantity</th>
+                        <td>{{ product.Quantity }}</td>
+                    </tr>
+                    <tr>
+                        <th>UnitePrice</th>
+                        <td>{{ product.UnitePrice }}</td>
+                    </tr>
+                    <tr>
+                        <th>UnitsInStock</th>
+                        <td>{{ product.UnitsInStock }}</td>
+                    </tr>
+                    <tr>
+                        <th>UnitsOnOrder</th>
+                        <td>{{ product.UnitsOnOrder }}</td>
+                    </tr>
+                    <tr>
+                        <th>ReorderLevel</th>
+                        <td>{{ product.ReorderLevel }}</td>
+                    </tr>
+                    <tr>
+                        <th>Discontinued</th>
+                        <td>{{ product.Discontinued }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="row">
+            <div class="col offset-2">
+                <a class="btn btn-secondary" href="{{ path('app_products_index') }}">back to list</a>
+            </div>
+            <div class="col offset-1">
+                <a class="btn btn-primary" href="{{ path('app_products_edit', {'Productid': product.Productid}) }}">edit</a>
+            </div>
+            <div class="col offset-1">
+                {{ include('products/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
