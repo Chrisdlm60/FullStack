@@ -1,4 +1,43 @@
+{# Form add disc #}
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="container">
+        <div class="form">
+            <div class="form-inline">
+                <div class="form-group mb-2">
+                    {{ form_row(form.title)}}
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    {{ form_row(form.label)}}
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    {{ form_row(form.picture)}}
+                </div>
+            </div>
+
+            <div class="form-inline">
+                <div class="form-group mb-2">
+                    {{ form_row(form.artist)}}
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label>If artist don't exist</label>
+                    <button class="btn btn-primary">
+                        <a href="{{ path('app_artist_new') }}">Add Artist</a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-inline">
+                <div class="form-group mb-2">
+                    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <a href="{{ path('app_artist_index') }}" class="btn btn-secondary">back to list</a>
+                </div>
+                {# <div class="form-group mb-2">
+                    {{ include('disc/_delete_form.html.twig') }}
+                </div> #}
+            </div>
+        </div>
+    </div>
 {{ form_end(form) }}

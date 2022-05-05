@@ -20,14 +20,9 @@ class Artist
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $url;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Disc::class, mappedBy="artist")
@@ -49,21 +44,9 @@ class Artist
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): self
-    {
-        $this->url = $url;
 
         return $this;
     }
@@ -96,5 +79,9 @@ class Artist
         }
 
         return $this;
+    }
+    public function __toString() : string
+    {
+        return $this->name;
     }
 }

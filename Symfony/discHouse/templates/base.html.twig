@@ -41,15 +41,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/artist">Artist</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/disc">Disc</a>
-                    </li>
-                    {# {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/artist">Artist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/disc">Disc</a>
+                        </li>
+                    
                         <li class="nav-item">
                             <a class="nav-link text-black-50" href="{{ path('app_logout') }}">Log Out</a>
                         </li>
@@ -61,9 +62,9 @@
                             <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_login')}}" class="btn btn-dark">Sign up</a>
+                            <a href="{{ path('app_register')}}" class="btn btn-dark">Sign up</a>
                         <li>
-                    {% endif %} #}
+                    {% endif %}
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

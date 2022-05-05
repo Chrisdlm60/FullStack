@@ -3,35 +3,60 @@
 {% block title %}Artist index{% endblock %}
 
 {% block body %}
-    <h1>Artist index</h1>
+    <h1 class="text-center">Artist index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Url</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for artist in artists %}
-            <tr>
-                <td>{{ artist.id }}</td>
-                <td>{{ artist.name }}</td>
-                <td>{{ artist.url }}</td>
-                <td>
-                    <a href="{{ path('app_artist_show', {'id': artist.id}) }}">show</a>
-                    <a href="{{ path('app_artist_edit', {'id': artist.id}) }}">edit</a>
-                </td>
-            </tr>
+    {% if is_granted('ROLE_USER') %}
+        
+        <div class="row row-cols-1 row-cols-md-3 m-0">
+            {% for artist in artists %}
+            <div class="col-sm-2 my-2">
+                <div class="card text-center">
+                    <img src="/img/cd.jpg" class="card-img-top mx-auto" style="height: 100px; width: 100px;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ path('app_artist_show', {'id': artist.id}) }}">Artist #{{ artist.id }}</a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_artist_edit', {'id': artist.id}) }}">
+                                    <i class="fa fa-solid fa-pen"></i>
+                                </a>
+                            {% endif %}
+                            
+                        </h5>
+                        <p class="card-text">Name : {{ artist.name }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for disc in artist.discs %}
+                                
+                            <li class="list-group-item">
+                                <a href="{{ path('app_disc_show', {'id': disc.id}) }}">{{ disc }} </a>
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('app_disc_edit', {'id': disc.id}) }}">
+                                        <i class="fa fa-solid fa-pen"></i>
+                                    </a>
+                                {% endif %} 
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('app_artist_new') }}">Create new</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_artist_new') }}" class="btn btn-primary">Create new</a>
+    {% endif %}
+
+    {% else %}
+        <p class="text-center">Veuillez vous connecter pour lire le contenu de cette page</p>
+    {% endif %}
 {% endblock %}

@@ -3,21 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Artist;
+use App\Entity\Disc;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ArtistType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom de l\'artiste',
-                'attr' => [ 'placeholder' => 'Bruel']
-            ])
-            ->add('url')
+            ->add('name', TextType::class)
+            // ->add('title', Disc::class)
         ;
     }
 
@@ -27,4 +25,6 @@ class ArtistType extends AbstractType
             'data_class' => Artist::class,
         ]);
     }
+
+
 }

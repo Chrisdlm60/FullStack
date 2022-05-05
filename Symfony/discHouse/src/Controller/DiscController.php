@@ -22,6 +22,7 @@ class DiscController extends AbstractController
     {
         return $this->render('disc/index.html.twig', [
             'discs' => $discRepository->findAll(),
+            // 'comments' => $commentsRepository->find('dis_id')   , CommentsRepository $commentsRepository
         ]);
     }
 
@@ -51,7 +52,7 @@ class DiscController extends AbstractController
     public function show(Disc $disc): Response
     {
         return $this->render('disc/show.html.twig', [
-            'disc' => $disc,
+            'disc' => $disc
         ]);
     }
 
