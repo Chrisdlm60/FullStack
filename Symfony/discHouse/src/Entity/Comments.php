@@ -22,7 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * )
  * 
  * @ApiFilter(OrderFilter::class, properties= {"date"})
- * @ApiFilter(SearchFilter::class, properties={"disc_id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"Disc": "exact"})
  * 
  */
 class Comments
