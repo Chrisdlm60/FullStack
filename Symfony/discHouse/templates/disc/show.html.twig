@@ -3,59 +3,65 @@
 {% block title %}Disc{% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_USER') %}
     <h1>Disc</h1>
     {# A présenter sous forme de cards pour plus de visibilité #}
+    <div class="col-sm-3 my-2 mx-auto">
+        <div class="card text-center">
+            <img src="/img/{{disc.picture}}" class="card-img-top mx-auto" style="height: 100px; width: 100px; align-items: center;" alt="">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ path('app_disc_show', {'id': disc.id}) }}">Disc #{{ disc.id }}</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Artist</th>
-                <th>Title</th>
-                <th>Label</th>
-                <th>Picture</th>
-                <th>Comments</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ disc.id }}</td>
-                <td>{{ disc.title }}</td>
-                <td>{{ disc.label }}</td>
-                <td>{{ disc.picture }}</td>
-                <td>{{ disc.artist }}</td>
-                <td>{% if disc.comments is not empty %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_disc_edit', {'id': disc.id}) }}">
+                            <i class="fa fa-solid fa-pen"></i>
+                        </a>
+                    {% endif %}
+                </h5>
+                <p class="card-text">Title : {{ disc.title }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <p>
+                    <a href="{{ path('app_artist_show', {'id': disc.artist.id}) }}">
+                        Artiste : {{ disc.artist.name }} 
+                    </a>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_artist_edit', {'id': disc.artist.id}) }}">
+                            <i class="fa fa-solid fa-pen"></i>
+                        </a>
+                    {% endif %}
+
+                </p>
+                <p>Label : {{ disc.label }}</p>
+                <p>Comments : 
+                    {% if disc.comments is not empty %}
                         {% for comment in disc.comments %}
-                        {# {{dump(comment)}} #}
-                        {{ comment.user.email }} :
-                        {{ comment.content }} <br>
+                            {{ comment.user.email }} :
+                            {{ comment.content }} <br>
                         {% endfor %}
                     {% else %}
                         Pas de commentaire 
                     {% endif %}
-
-                </td>
-                <td><a href="{{path('app_comments_new', {disc: disc.id})}}"><buton class="btn btn-primary">Add comment</buton></a></td>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <td><a href="{{ path('app_disc_edit', {'id': disc.id}) }}">
-                        <i class="fa fa-solid fa-pen"></i>
-                    </a></td>
-                {% endif %}
-            </tr>
-        </tbody>
-    </table>
+                    <a href="{{path('app_comments_new', {disc: disc.id})}}"><buton class="btn btn-primary">Add comment</buton></a>
+                </p>
+            </ul>
+        </div>
+    </div>
 
     <div class="row">
-        <div class='col-2 offset-2'>
+        <div class='col-2 mx-auto'>
             <a href="{{ path('app_disc_index') }}" class="btn btn-secondary">back to list</a>
         </div>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <div class='col-2 offset-2'>
+            <div class='mx-auto'>
                 {{ include('disc/_delete_form.html.twig') }}
             </div>
         {% endif %}
     </div>
+
+    {% endif %}
 
 {% endblock %}

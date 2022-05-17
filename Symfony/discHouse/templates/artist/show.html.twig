@@ -3,8 +3,9 @@
 {% block title %}Artist{% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_USER') %}
+        
     <h1>Artist</h1>
-    {# A présenter sous forme de cards pour plus de visibilité #}
     <table class="table">
         <thead>
             <td>ID</td>
@@ -52,4 +53,6 @@
         </div>
     </div>
 
+    {% endif %}
+  
 {% endblock %}

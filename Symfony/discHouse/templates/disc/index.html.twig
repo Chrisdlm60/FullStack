@@ -11,7 +11,7 @@
         {% for disc in discs %}
             <div class="col-sm-3 my-2">
                 <div class="card text-center">
-                    <img src="/img/cd.jpg" class="card-img-top mx-auto" style="height: 100px; width: 100px; align-items: center;" alt="...">
+                    <img src="/img/{{disc.picture}}" class="card-img-top mx-auto" style="height: 100px; width: 100px; align-items: center;" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="{{ path('app_disc_show', {'id': disc.id}) }}">Disc #{{ disc.id }}</a>
@@ -26,7 +26,7 @@
                         <p class="card-text">Title : {{ disc.title }}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li>
+                        <p>
                             <a href="{{ path('app_artist_show', {'id': disc.artist.id}) }}">
                                 Artiste : {{ disc.artist.name }} 
                             </a>
@@ -37,9 +37,9 @@
                                 </a>
                             {% endif %}
 
-                        </li>
-                        <li>Label : {{ disc.label }}</li>
-                        <li>Picture : {{ disc.picture }}</li>
+                        </p>
+                        <p>Label : {{ disc.label }}</p>
+                        <p>Picture : {{ disc.picture }}</p>
                     </ul>
                 </div>
             </div>
