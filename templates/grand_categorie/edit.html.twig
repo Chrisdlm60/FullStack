@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GrandCategorie{% endblock %}
+
+{% block body %}
+    <h1>Edit GrandCategorie</h1>
+
+    {{ include('grand_categorie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_grand_categorie_index') }}">back to list</a>
+
+    {{ include('grand_categorie/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrandCategorie index{% endblock %}
+
+{% block body %}
+    <h1>GrandCategorie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Grd_cat_nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grand_categorie in grand_categories %}
+            <tr>
+                <td>{{ grand_categorie.id }}</td>
+                <td>{{ grand_categorie.grdCatNom }}</td>
+                <td>
+                    <a href="{{ path('app_grand_categorie_show', {'id': grand_categorie.id}) }}">show</a>
+                    <a href="{{ path('app_grand_categorie_edit', {'id': grand_categorie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_grand_categorie_new') }}">Create new</a>
+{% endblock %}

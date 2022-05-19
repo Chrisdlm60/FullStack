@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GrandCategorie{% endblock %}
+
+{% block body %}
+    <h1>Create new GrandCategorie</h1>
+
+    {{ include('grand_categorie/_form.html.twig') }}
+
+    <a href="{{ path('app_grand_categorie_index') }}">back to list</a>
+{% endblock %}
